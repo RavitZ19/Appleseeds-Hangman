@@ -1,0 +1,31 @@
+# Hangman game
+
+const prompt = require("prompt-sync")();
+
+const Hangman = (word)=>{
+    let guessesLeft = 10
+    let hiddenWord = '*'.repeat(word.length).split('');
+    while (guessesLeft > 0) {
+        console.log("You have " + guessesLeft + " guesses.");
+        console.log("The word is:"));
+        console.log(hiddenWord.join(""));
+        console.log("Please enter your guess:");
+        let guess = prompt();
+        if (guess.length > 1 || (/[a-z]/).test(guess)) {
+            console.log("Please enter only one character");
+        } else if (word.includes(guess)) {
+            for (let i=0; i < word.length; i++) {
+                if (word.charAt(i) == guess) {
+                    hiddenWord[i] = word.charAt(i)
+                }
+            }
+            if (!hiddenWord.includes('*')) {
+                console.log("Wow you are good!!!");
+                return;
+            }
+        } else {
+            guessesLeft--;
+        }
+    }
+    console.log("You lost");
+}
